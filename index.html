@@ -12,14 +12,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
 <style>
-/* ============================================================
-   DESIGN TOKENS  —  palette sampled from the "Mental Aerobics"
-   book cover: deep teal-navy, coral, teal, royal blue, yellow,
-   over graph-paper blue.
-   Type  : Fraunces (display serif) + Inter (body / UI).
-   Motion: NONE on load/scroll. Transitions live ONLY on
-           interactive elements (hover / focus), per brief.
-   ============================================================ */
+
 :root{
   --bg:#ffffff;
   --bg-tint:#f1fafb;        /* pale cover-blue for alt sections */
@@ -191,10 +184,11 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
 /* ============================================================
    REVIEWS / MEDIA
    ============================================================ */
-.review-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-bottom:64px;}
-.review-card{background:var(--bg);border:1px solid var(--line);border-radius:var(--radius);padding:30px;display:flex;flex-direction:column;}
-.review-card .quote-mark{font-family:var(--serif);font-size:46px;line-height:.4;color:var(--coral);margin-bottom:18px;height:24px;}
-.review-text{font-family:var(--serif);font-style:italic;font-size:18px;line-height:1.5;color:var(--ink);margin-bottom:22px;flex:1;}
+.review-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:28px;margin-bottom:64px;}
+.review-card{background:var(--bg);border:1px solid var(--line);border-radius:var(--radius);padding:32px;display:flex;flex-direction:column;}
+.review-stars{color:#f2a900;font-size:16px;letter-spacing:3px;margin-bottom:16px;}
+.review-title{font-family:var(--serif);font-weight:600;font-size:19px;line-height:1.3;color:var(--navy);margin-bottom:12px;}
+.review-text{font-size:16px;line-height:1.65;color:var(--ink);margin-bottom:24px;flex:1;}
 .review-author{font-size:14px;font-weight:600;color:var(--navy);}
 .review-source{font-size:13px;color:var(--muted);}
 
@@ -396,26 +390,22 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
     <div class="container">
       <p class="eyebrow">Praise &amp; Media</p>
       <h2 class="section-title">What readers are saying</h2>
-      <p class="section-intro">Reviews from readers who've followed Jim across the road, the puzzle page, and the classroom.</p>
+      <p class="section-intro">What teachers and tutors are saying about <em>Proverbs for the Classroom</em>.</p>
 
       <div class="review-grid">
         <div class="review-card">
-          <div class="quote-mark" aria-hidden="true">&ldquo;</div>
-          <p class="review-text">I started with the travel journal and ended up buying all three. It's rare to find an author this curious — and this easy to read.</p>
-          <p class="review-author">Marcia L.</p>
-          <p class="review-source">Verified Reader</p>
+          <div class="review-stars" role="img" aria-label="Rated 5 out of 5 stars">★★★★★</div>
+          <p class="review-title">Start here to encourage students to think.</p>
+          <p class="review-text">For those who want to encourage students to think, this is a good book to use. I have found it helpful in boosting reading comprehension as well. First the students learn to ponder the sayings listed in the book. Then they open up with examples to add flesh to the sayings. When they venture into re-stating these proverbs in their own words, I know they have reached a new level of comprehension. While I have been using this book in a tutorial setting, I can see the value of bringing it into the classroom to encourage healthy discussions among students.</p>
+          <p class="review-author">Gardienne de Cabri</p>
+          <p class="review-source">Amazon review · April 8, 2016</p>
         </div>
         <div class="review-card">
-          <div class="quote-mark" aria-hidden="true">&ldquo;</div>
-          <p class="review-text">The puzzle book became a family tradition at our dinner table. Approachable for the kids, genuinely tricky for the adults.</p>
-          <p class="review-author">D. Okonkwo</p>
-          <p class="review-source">Parent &amp; Educator</p>
-        </div>
-        <div class="review-card">
-          <div class="quote-mark" aria-hidden="true">&ldquo;</div>
-          <p class="review-text">His classroom proverbs are now pinned above my desk. Short, wise, and exactly what a busy teacher needs.</p>
-          <p class="review-author">Ms. Hartley</p>
-          <p class="review-source">Middle School Teacher</p>
+          <div class="review-stars" role="img" aria-label="Rated 5 out of 5 stars">★★★★★</div>
+          <p class="review-title">Excellent book for teachers of all subjects!</p>
+          <p class="review-text">A concise, classroom-ready resource that teachers across every subject can put to use right away.</p>
+          <p class="review-author">Amazon Customer</p>
+          <p class="review-source">Amazon review · May 27, 2016</p>
         </div>
       </div>
 
