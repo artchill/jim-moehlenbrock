@@ -137,10 +137,10 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
     linear-gradient(90deg,var(--grid) 1px,transparent 1px);
   background-size:28px 28px;
 }
-.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:64px;align-items:center;}
+.hero-inner{max-width:760px;margin:0 auto;text-align:center;}
 
 /* Three strands name Jim's three genres; each carries its book's color. */
-.strands{display:flex;gap:18px;flex-wrap:wrap;margin-bottom:26px;}
+.strands{display:flex;justify-content:center;gap:18px;flex-wrap:wrap;margin-bottom:26px;}
 .strand{
   font-family:var(--sans);font-size:12px;font-weight:600;letter-spacing:.12em;
   text-transform:uppercase;color:var(--muted);
@@ -153,27 +153,17 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
 
 .hero h1{font-size:clamp(38px,6vw,62px);letter-spacing:-.02em;margin-bottom:22px;}
 .hero h1 em{font-style:italic;color:var(--coral);}
-.hero-sub{font-size:19px;color:var(--muted);max-width:46ch;margin-bottom:34px;}
-.hero-cta{display:flex;gap:14px;flex-wrap:wrap;}
-
-.hero-portrait{
-  aspect-ratio:4/5;background:#fff;border:1px solid var(--line);border-radius:var(--radius);
-  display:flex;align-items:center;justify-content:center;color:var(--muted);
-  font-size:14px;text-align:center;padding:24px;box-shadow:0 1px 0 var(--line);
-}
+.hero-sub{font-size:19px;color:var(--muted);max-width:48ch;margin:0 auto 34px;}
+.hero-cta{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;}
 
 /* ============================================================
-   MEET THE AUTHOR
+   MEET THE AUTHOR  (no portrait — single centered column)
    ============================================================ */
-.author-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:64px;align-items:start;}
-.author-portrait{
-  aspect-ratio:4/5;background:var(--bg);border:1px solid var(--line);border-radius:var(--radius);
-  display:flex;align-items:center;justify-content:center;color:var(--muted);
-  font-size:14px;text-align:center;padding:24px;
-}
+.author-inner{max-width:760px;margin:0 auto;}
+.author-inner .eyebrow{text-align:center;}
 .author-body p{margin-bottom:20px;color:var(--ink);}
 .author-body p:last-child{margin-bottom:0;}
-.author-name{font-size:clamp(28px,4vw,38px);margin-bottom:18px;}
+.author-name{font-size:clamp(28px,4vw,38px);margin-bottom:26px;text-align:center;}
 
 /* ============================================================
    BOOKS  — each card color-coded to a cover hue
@@ -190,10 +180,9 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
 
 .book-cover{
   aspect-ratio:2/3;border:1px solid var(--line);border-radius:var(--radius);margin-bottom:22px;
-  display:flex;align-items:center;justify-content:center;color:var(--muted);
-  font-size:13px;text-align:center;padding:18px;
-  background:color-mix(in srgb,var(--card) 8%,#fff);
+  overflow:hidden;background:color-mix(in srgb,var(--card) 8%,#fff);
 }
+.book-cover img{width:100%;height:100%;object-fit:cover;display:block;}
 .book-genre{font-size:11px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--card);margin-bottom:10px;}
 .book-title{font-size:21px;line-height:1.25;margin-bottom:14px;color:var(--navy);}
 .book-synopsis{font-size:15px;color:var(--muted);margin-bottom:24px;flex:1;}
@@ -271,8 +260,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
    RESPONSIVE
    ============================================================ */
 @media (max-width:900px){
-  .hero-grid,.author-grid,.contact-grid{grid-template-columns:1fr;gap:40px;}
-  .hero-portrait,.author-portrait{max-width:360px;}
+  .contact-grid{grid-template-columns:1fr;gap:40px;}
   .book-grid{grid-template-columns:repeat(2,1fr);}
   .review-grid{grid-template-columns:1fr;}
   .media-grid{grid-template-columns:1fr;}
@@ -324,22 +312,17 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
   <!-- ====================== HERO ====================== -->
   <section class="hero" id="home">
     <div class="container">
-      <div class="hero-grid">
-        <div class="hero-copy">
-          <div class="strands">
-            <span class="strand strand--travel">Travel</span>
-            <span class="strand strand--puzzle">Puzzles</span>
-            <span class="strand strand--proverb">Proverbs</span>
-          </div>
-          <h1>One author, three ways to <em>keep curious</em>.</h1>
-          <p class="hero-sub">From a backpack across Asia to a chalkboard full of wisdom to a page of math worth a second look — Jim Moehlenbrock writes for readers who like to wander, learn, and figure things out.</p>
-          <div class="hero-cta">
-            <a href="#books" class="btn btn--primary">Explore Books</a>
-            <a href="#author" class="btn btn--outline">Meet the Author</a>
-          </div>
+      <div class="hero-inner">
+        <div class="strands">
+          <span class="strand strand--travel">Travel</span>
+          <span class="strand strand--puzzle">Puzzles</span>
+          <span class="strand strand--proverb">Proverbs</span>
         </div>
-        <div class="hero-portrait" aria-hidden="true">
-          [ Author headshot ]
+        <h1>One author, three ways to <em>keep curious</em>.</h1>
+        <p class="hero-sub">From a backpack across Asia to a chalkboard full of wisdom to a page of math worth a second look — Jim Moehlenbrock writes for readers who like to wander, learn, and figure things out.</p>
+        <div class="hero-cta">
+          <a href="#books" class="btn btn--primary">Explore Books</a>
+          <a href="#author" class="btn btn--outline">Meet the Author</a>
         </div>
       </div>
     </div>
@@ -348,13 +331,10 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
   <!-- ====================== MEET THE AUTHOR ====================== -->
   <section class="section section--tint" id="author">
     <div class="container">
-      <div class="author-grid">
-        <div class="author-portrait" aria-hidden="true">
-          [ Author photo ]
-        </div>
+      <div class="author-inner">
+        <p class="eyebrow">Meet the Author</p>
+        <h2 class="author-name">Jim Moehlenbrock</h2>
         <div class="author-body">
-          <p class="eyebrow">Meet the Author</p>
-          <h2 class="author-name">Jim Moehlenbrock</h2>
           <p>Jim Moehlenbrock is a writer whose curiosity refuses to stay in one lane. Over the years his notebooks have filled with three very different kinds of writing: the day-by-day record of a budget traveler crossing Asia by rail and on foot, the small proverbs he gathered and sharpened during years in the classroom, and the math puzzles he designs to keep restless minds limber. What ties them together is a simple conviction — that learning should feel like an adventure rather than a chore.</p>
           <p>Whether he is mapping a route through an unfamiliar city, distilling a hard-won lesson into a single memorable line, or building a puzzle that rewards patience over speed, Jim writes for readers who enjoy the work of thinking. His books ask you to slow down, look closely, and take pleasure in the moment a problem finally gives way.</p>
         </div>
@@ -373,7 +353,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
 
         <!-- Book 1 — Travel (Paperback only available) -->
         <article class="book-card book-card--travel">
-          <div class="book-cover" aria-hidden="true">[ Cover image ]</div>
+          <div class="book-cover"><img src="https://raw.githubusercontent.com/artchill/jim-moehlenbrock/main/%20A%20Budget%20Traveler%27s%20Daily%20Journal%20of%20His%20Solo%20Adventures%20Through%20Asia.jpg" alt="Book cover: A Budget Traveler's Daily Journal of His Solo Adventures Through Asia" loading="lazy"></div>
           <p class="book-genre">Travel Journal</p>
           <h3 class="book-title">A Budget Traveler's Daily Journal of His Solo Adventures Through Asia</h3>
           <p class="book-synopsis">A candid, day-by-day account of one traveler's solo backpacking route across Asia — the cheap rooms, the long train rides, the missed connections, and the small kindnesses that make a shoestring journey unforgettable. Equal parts itinerary and travelogue, it's a companion for anyone dreaming of their own departure.</p>
@@ -384,7 +364,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
 
         <!-- Book 2 — Puzzles (Kindle / Paperback / Hardcover) -->
         <article class="book-card book-card--puzzle">
-          <div class="book-cover" aria-hidden="true">[ Cover image ]</div>
+          <div class="book-cover"><img src="https://raw.githubusercontent.com/artchill/jim-moehlenbrock/main/%20Mental%20Aerobics%20--%20Math%20Puzzles%20for%20Everyone.jpg" alt="Book cover: Mental Aerobics — Math Puzzles for Everyone" loading="lazy"></div>
           <p class="book-genre">Puzzles &amp; Brain Teasers</p>
           <h3 class="book-title">Mental Aerobics — Math Puzzles for Everyone</h3>
           <p class="book-synopsis">A friendly workout for the mind, packed with math puzzles that welcome every skill level. No advanced background required — just curiosity and a pencil. From quick warm-ups to satisfying head-scratchers, Volume One is built to keep families, students, and lifelong learners coming back for one more problem.</p>
@@ -397,7 +377,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
 
         <!-- Book 3 — Education (Kindle / Paperback) -->
         <article class="book-card book-card--edu">
-          <div class="book-cover" aria-hidden="true">[ Cover image ]</div>
+          <div class="book-cover"><img src="https://raw.githubusercontent.com/artchill/jim-moehlenbrock/main/%20Proverbs%20for%20the%20Classroom.jpg" alt="Book cover: Proverbs for the Classroom" loading="lazy"></div>
           <p class="book-genre">Education</p>
           <h3 class="book-title">Proverbs for the Classroom</h3>
           <p class="book-synopsis">A collection of short, memorable sayings drawn from years of teaching — gentle wisdom for students and a quiet resource for teachers. Each proverb is built to stick, turning everyday classroom moments into lessons that travel well beyond the school day.</p>
