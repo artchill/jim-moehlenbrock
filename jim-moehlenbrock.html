@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jim Moehlenbrock — Author</title>
+<meta name="description" content="The official website of author Jim Moehlenbrock: travel journals, classroom proverbs, and math puzzles for curious minds.">
+
+<!-- Fonts: Fraunces (literary display) + Inter (clean body/UI) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   DESIGN TOKENS  —  palette sampled from the "Mental Aerobics"
+   book cover: deep teal-navy, coral, teal, royal blue, yellow,
+   over graph-paper blue.
+   Type  : Fraunces (display serif) + Inter (body / UI).
+   Motion: NONE on load/scroll. Transitions live ONLY on
+           interactive elements (hover / focus), per brief.
+   ============================================================ */
+:root{
+  --bg:#ffffff;
+  --bg-tint:#f1fafb;        /* pale cover-blue for alt sections */
+  --ink:#243640;            /* dark slate body text             */
+  --muted:#5d6e76;          /* secondary text                   */
+
+  --navy:#1f5a76;           /* cover "MENTAL" — headings / nav   */
+  --navy-dark:#16475e;
+  --coral:#e94f3a;          /* cover "AEROBICS" — primary CTA    */
+  --coral-dark:#cf3f2c;
+  --teal:#23b1ae;           /* cover quadrant                    */
+  --blue:#0a93c7;           /* cover quadrant                    */
+  --yellow:#f8c12f;         /* cover quadrant                    */
+
+  --line:#d8e6ea;           /* cool hairline borders             */
+  --grid:#e1f0f3;           /* graph-paper lines (hero)          */
+  --field:#f7fbfc;          /* input background                  */
+
+  --serif:'Fraunces',Georgia,'Times New Roman',serif;
+  --sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+
+  --maxw:1120px;
+  --radius:6px;
+}
+
+/* ------------------------------ Reset / base ------------------------------ */
+*{box-sizing:border-box;margin:0;padding:0;}
+
+html{scroll-behavior:smooth;scroll-padding-top:84px;}
+/* Respect users who ask for no motion — disables smooth-scroll for them. */
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto;}}
+
+body{
+  font-family:var(--sans);
+  color:var(--ink);
+  background:var(--bg);
+  line-height:1.65;
+  font-size:17px;
+  -webkit-font-smoothing:antialiased;
+}
+
+h1,h2,h3{font-family:var(--serif);font-weight:500;line-height:1.15;color:var(--navy);}
+a{color:inherit;text-decoration:none;}
+img{max-width:100%;display:block;}
+
+/* Visible keyboard focus everywhere (quality floor). */
+a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
+  outline:2px solid var(--coral);
+  outline-offset:2px;
+}
+
+.container{width:100%;max-width:var(--maxw);margin:0 auto;padding:0 24px;}
+
+/* Section rhythm */
+.section{padding:96px 0;}
+.section--tint{background:var(--bg-tint);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+
+.eyebrow{
+  font-family:var(--sans);font-size:12px;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--coral);
+  margin-bottom:14px;
+}
+.section-title{font-size:clamp(28px,4vw,40px);margin-bottom:14px;letter-spacing:-.01em;}
+.section-intro{color:var(--muted);max-width:60ch;margin-bottom:48px;}
+
+/* ------------------------------ Buttons ------------------------------ */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  font-family:var(--sans);font-size:15px;font-weight:600;
+  padding:13px 24px;border-radius:var(--radius);border:1px solid transparent;
+  cursor:pointer;
+  transition:background-color .18s ease,color .18s ease,border-color .18s ease;
+}
+.btn--primary{background:var(--coral);color:#fff;}
+.btn--primary:hover{background:var(--coral-dark);}
+.btn--outline{background:transparent;color:var(--navy);border-color:var(--navy);}
+.btn--outline:hover{background:var(--navy);color:#fff;}
+.btn--full{width:100%;}
+
+/* ============================================================
+   HEADER / STICKY NAVIGATION
+   ============================================================ */
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--line);}
+.nav{display:flex;align-items:center;justify-content:space-between;height:72px;}
+.brand{font-family:var(--serif);font-size:21px;font-weight:600;letter-spacing:-.01em;color:var(--navy);}
+.brand span{color:var(--coral);}
+
+.nav-links{display:flex;align-items:center;gap:34px;list-style:none;}
+.nav-links a{
+  font-size:15px;font-weight:500;color:var(--muted);padding:4px 0;
+  border-bottom:2px solid transparent;
+  transition:color .18s ease,border-color .18s ease;
+}
+.nav-links a:hover{color:var(--navy);}
+.nav-links a.is-active{color:var(--navy);border-bottom-color:var(--coral);}
+
+.nav-toggle{
+  display:none;background:none;border:1px solid var(--line);border-radius:var(--radius);
+  width:42px;height:40px;cursor:pointer;align-items:center;justify-content:center;
+}
+.nav-toggle span,.nav-toggle span::before,.nav-toggle span::after{
+  content:"";display:block;width:20px;height:2px;background:var(--navy);position:relative;
+}
+.nav-toggle span::before{position:absolute;top:-6px;}
+.nav-toggle span::after{position:absolute;top:6px;}
+
+/* ============================================================
+   HERO  — signature graph-paper grid nods to the cover
+   ============================================================ */
+.hero{
+  padding:104px 0 96px;
+  background-color:var(--bg);
+  background-image:
+    linear-gradient(var(--grid) 1px,transparent 1px),
+    linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:28px 28px;
+}
+.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:64px;align-items:center;}
+
+/* Three strands name Jim's three genres; each carries its book's color. */
+.strands{display:flex;gap:18px;flex-wrap:wrap;margin-bottom:26px;}
+.strand{
+  font-family:var(--sans);font-size:12px;font-weight:600;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--muted);
+  display:inline-flex;align-items:center;gap:8px;
+}
+.strand::before{content:"";width:18px;height:2px;border-radius:2px;background:var(--accent,var(--coral));}
+.strand--travel{--accent:var(--blue);}
+.strand--puzzle{--accent:var(--coral);}
+.strand--proverb{--accent:var(--teal);}
+
+.hero h1{font-size:clamp(38px,6vw,62px);letter-spacing:-.02em;margin-bottom:22px;}
+.hero h1 em{font-style:italic;color:var(--coral);}
+.hero-sub{font-size:19px;color:var(--muted);max-width:46ch;margin-bottom:34px;}
+.hero-cta{display:flex;gap:14px;flex-wrap:wrap;}
+
+.hero-portrait{
+  aspect-ratio:4/5;background:#fff;border:1px solid var(--line);border-radius:var(--radius);
+  display:flex;align-items:center;justify-content:center;color:var(--muted);
+  font-size:14px;text-align:center;padding:24px;box-shadow:0 1px 0 var(--line);
+}
+
+/* ============================================================
+   MEET THE AUTHOR
+   ============================================================ */
+.author-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:64px;align-items:start;}
+.author-portrait{
+  aspect-ratio:4/5;background:var(--bg);border:1px solid var(--line);border-radius:var(--radius);
+  display:flex;align-items:center;justify-content:center;color:var(--muted);
+  font-size:14px;text-align:center;padding:24px;
+}
+.author-body p{margin-bottom:20px;color:var(--ink);}
+.author-body p:last-child{margin-bottom:0;}
+.author-name{font-size:clamp(28px,4vw,38px);margin-bottom:18px;}
+
+/* ============================================================
+   BOOKS  — each card color-coded to a cover hue
+   ============================================================ */
+.book-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;}
+.book-card{
+  background:var(--bg);border:1px solid var(--line);border-radius:var(--radius);
+  border-top:3px solid var(--card,var(--coral));
+  padding:26px;display:flex;flex-direction:column;
+}
+.book-card--travel{--card:var(--blue);}
+.book-card--puzzle{--card:var(--coral);}
+.book-card--edu{--card:var(--teal);}
+
+.book-cover{
+  aspect-ratio:2/3;border:1px solid var(--line);border-radius:var(--radius);margin-bottom:22px;
+  display:flex;align-items:center;justify-content:center;color:var(--muted);
+  font-size:13px;text-align:center;padding:18px;
+  background:color-mix(in srgb,var(--card) 8%,#fff);
+}
+.book-genre{font-size:11px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--card);margin-bottom:10px;}
+.book-title{font-size:21px;line-height:1.25;margin-bottom:14px;color:var(--navy);}
+.book-synopsis{font-size:15px;color:var(--muted);margin-bottom:24px;flex:1;}
+.book-buttons{display:flex;flex-direction:column;gap:10px;}
+
+/* ============================================================
+   REVIEWS / MEDIA
+   ============================================================ */
+.review-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-bottom:64px;}
+.review-card{background:var(--bg);border:1px solid var(--line);border-radius:var(--radius);padding:30px;display:flex;flex-direction:column;}
+.review-card .quote-mark{font-family:var(--serif);font-size:46px;line-height:.4;color:var(--coral);margin-bottom:18px;height:24px;}
+.review-text{font-family:var(--serif);font-style:italic;font-size:18px;line-height:1.5;color:var(--ink);margin-bottom:22px;flex:1;}
+.review-author{font-size:14px;font-weight:600;color:var(--navy);}
+.review-source{font-size:13px;color:var(--muted);}
+
+.media-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:28px;}
+.yt-figure{margin:0;}
+.yt-facade{
+  position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;cursor:pointer;
+  background:#000;border:1px solid var(--line);border-radius:var(--radius);
+}
+.yt-facade img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+.yt-facade iframe{position:absolute;inset:0;width:100%;height:100%;border:0;}
+.yt-play{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:66px;height:66px;border-radius:50%;border:none;cursor:pointer;
+  background:var(--coral);color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  transition:background-color .18s ease;
+}
+.yt-facade:hover .yt-play,.yt-play:hover{background:var(--coral-dark);}
+.yt-play svg{width:24px;height:24px;margin-left:3px;}
+.media-caption{margin-top:12px;font-size:14px;color:var(--muted);}
+.media-caption a{color:var(--navy);font-weight:500;transition:color .18s ease;}
+.media-caption a:hover{color:var(--coral);}
+
+/* ============================================================
+   CONTACT
+   ============================================================ */
+.contact-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:64px;align-items:start;}
+.contact-info p{color:var(--muted);margin-bottom:18px;max-width:42ch;}
+.contact-detail{margin-bottom:18px;}
+.contact-detail .label{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--coral);margin-bottom:4px;}
+.contact-detail a{color:var(--navy);font-weight:500;}
+.contact-detail a:hover{color:var(--coral);}
+.social-links{display:flex;gap:18px;margin-top:8px;}
+.social-links a{font-size:15px;font-weight:500;color:var(--navy);border-bottom:1px solid var(--line);padding-bottom:2px;transition:border-color .18s ease,color .18s ease;}
+.social-links a:hover{color:var(--coral);border-bottom-color:var(--coral);}
+
+.form-field{margin-bottom:18px;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+.form-field label{display:block;font-size:14px;font-weight:500;margin-bottom:7px;color:var(--ink);}
+.form-field input,.form-field textarea{
+  width:100%;font-family:var(--sans);font-size:15px;color:var(--ink);
+  background:var(--field);border:1px solid var(--line);border-radius:var(--radius);
+  padding:12px 14px;transition:border-color .18s ease,background-color .18s ease;
+}
+.form-field input:focus,.form-field textarea:focus{border-color:var(--teal);background:var(--bg);outline:none;}
+.form-field textarea{resize:vertical;min-height:130px;}
+.form-status{font-size:14px;color:var(--navy);margin-top:14px;min-height:20px;}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.site-footer{background:var(--navy);color:#d7e7ee;padding:40px 0;}
+.footer-inner{display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap;}
+.site-footer .brand{color:#fff;}
+.site-footer .brand span{color:var(--yellow);}
+.footer-nav{display:flex;gap:24px;list-style:none;}
+.footer-nav a{font-size:14px;color:#d7e7ee;transition:color .18s ease;}
+.footer-nav a:hover{color:#fff;}
+.footer-copy{font-size:13px;color:#9fc0cd;}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width:900px){
+  .hero-grid,.author-grid,.contact-grid{grid-template-columns:1fr;gap:40px;}
+  .hero-portrait,.author-portrait{max-width:360px;}
+  .book-grid{grid-template-columns:repeat(2,1fr);}
+  .review-grid{grid-template-columns:1fr;}
+  .media-grid{grid-template-columns:1fr;}
+}
+@media (max-width:680px){
+  .section{padding:64px 0;}
+  .hero{padding:64px 0;}
+  .book-grid{grid-template-columns:1fr;}
+  .book-card{max-width:420px;}
+  .form-row{grid-template-columns:1fr;}
+
+  .nav-toggle{display:flex;}
+  .nav-links{
+    display:none;position:absolute;left:0;right:0;top:72px;
+    flex-direction:column;align-items:flex-start;gap:0;
+    background:var(--bg);border-bottom:1px solid var(--line);padding:8px 24px 16px;
+  }
+  .nav-links.is-open{display:flex;}
+  .nav-links li{width:100%;}
+  .nav-links a{display:block;width:100%;padding:12px 0;border-bottom:1px solid var(--line);}
+  .nav-links li:last-child a{border-bottom:none;}
+  .nav-links a.is-active{border-bottom-color:var(--line);color:var(--coral);}
+}
+</style>
+</head>
+<body>
+
+<!-- ====================== HEADER / NAV ====================== -->
+<header class="site-header">
+  <div class="container">
+    <nav class="nav" aria-label="Primary">
+      <a href="#home" class="brand">Jim <span>Moehlenbrock</span></a>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="navLinks">
+        <span></span>
+      </button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#author">Meet the Author</a></li>
+        <li><a href="#books">Books</a></li>
+        <li><a href="#reviews">Reviews</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <!-- ====================== HERO ====================== -->
+  <section class="hero" id="home">
+    <div class="container">
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <div class="strands">
+            <span class="strand strand--travel">Travel</span>
+            <span class="strand strand--puzzle">Puzzles</span>
+            <span class="strand strand--proverb">Proverbs</span>
+          </div>
+          <h1>One author, three ways to <em>keep curious</em>.</h1>
+          <p class="hero-sub">From a backpack across Asia to a chalkboard full of wisdom to a page of math worth a second look — Jim Moehlenbrock writes for readers who like to wander, learn, and figure things out.</p>
+          <div class="hero-cta">
+            <a href="#books" class="btn btn--primary">Explore Books</a>
+            <a href="#author" class="btn btn--outline">Meet the Author</a>
+          </div>
+        </div>
+        <div class="hero-portrait" aria-hidden="true">
+          [ Author headshot ]
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================== MEET THE AUTHOR ====================== -->
+  <section class="section section--tint" id="author">
+    <div class="container">
+      <div class="author-grid">
+        <div class="author-portrait" aria-hidden="true">
+          [ Author photo ]
+        </div>
+        <div class="author-body">
+          <p class="eyebrow">Meet the Author</p>
+          <h2 class="author-name">Jim Moehlenbrock</h2>
+          <p>Jim Moehlenbrock is a writer whose curiosity refuses to stay in one lane. Over the years his notebooks have filled with three very different kinds of writing: the day-by-day record of a budget traveler crossing Asia by rail and on foot, the small proverbs he gathered and sharpened during years in the classroom, and the math puzzles he designs to keep restless minds limber. What ties them together is a simple conviction — that learning should feel like an adventure rather than a chore.</p>
+          <p>Whether he is mapping a route through an unfamiliar city, distilling a hard-won lesson into a single memorable line, or building a puzzle that rewards patience over speed, Jim writes for readers who enjoy the work of thinking. His books ask you to slow down, look closely, and take pleasure in the moment a problem finally gives way.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================== BOOKS ====================== -->
+  <section class="section" id="books">
+    <div class="container">
+      <p class="eyebrow">The Books</p>
+      <h2 class="section-title">Three books, three different journeys</h2>
+      <p class="section-intro">Pick the one that matches your mood — the road, the puzzle page, or the classroom. Each links straight to its Amazon listing.</p>
+
+      <div class="book-grid">
+
+        <!-- Book 1 — Travel (Paperback only available) -->
+        <article class="book-card book-card--travel">
+          <div class="book-cover" aria-hidden="true">[ Cover image ]</div>
+          <p class="book-genre">Travel Journal</p>
+          <h3 class="book-title">A Budget Traveler's Daily Journal of His Solo Adventures Through Asia</h3>
+          <p class="book-synopsis">A candid, day-by-day account of one traveler's solo backpacking route across Asia — the cheap rooms, the long train rides, the missed connections, and the small kindnesses that make a shoestring journey unforgettable. Equal parts itinerary and travelogue, it's a companion for anyone dreaming of their own departure.</p>
+          <div class="book-buttons">
+            <a href="https://www.amazon.com/dp/B0FXJGJWHZ" target="_blank" rel="noopener" class="btn btn--primary btn--full">Buy Paperback</a>
+          </div>
+        </article>
+
+        <!-- Book 2 — Puzzles (Kindle / Paperback / Hardcover) -->
+        <article class="book-card book-card--puzzle">
+          <div class="book-cover" aria-hidden="true">[ Cover image ]</div>
+          <p class="book-genre">Puzzles &amp; Brain Teasers</p>
+          <h3 class="book-title">Mental Aerobics — Math Puzzles for Everyone</h3>
+          <p class="book-synopsis">A friendly workout for the mind, packed with math puzzles that welcome every skill level. No advanced background required — just curiosity and a pencil. From quick warm-ups to satisfying head-scratchers, Volume One is built to keep families, students, and lifelong learners coming back for one more problem.</p>
+          <div class="book-buttons">
+            <a href="https://www.amazon.com/dp/B0G456Y6QG" target="_blank" rel="noopener" class="btn btn--primary btn--full">Buy on Kindle</a>
+            <a href="https://www.amazon.com/dp/B0G4T15QR5" target="_blank" rel="noopener" class="btn btn--outline btn--full">Buy Paperback</a>
+            <a href="https://www.amazon.com/dp/B0G4T6V2JN" target="_blank" rel="noopener" class="btn btn--outline btn--full">Buy Hardcover</a>
+          </div>
+        </article>
+
+        <!-- Book 3 — Education (Kindle / Paperback) -->
+        <article class="book-card book-card--edu">
+          <div class="book-cover" aria-hidden="true">[ Cover image ]</div>
+          <p class="book-genre">Education</p>
+          <h3 class="book-title">Proverbs for the Classroom</h3>
+          <p class="book-synopsis">A collection of short, memorable sayings drawn from years of teaching — gentle wisdom for students and a quiet resource for teachers. Each proverb is built to stick, turning everyday classroom moments into lessons that travel well beyond the school day.</p>
+          <div class="book-buttons">
+            <a href="https://www.amazon.com/dp/B01BZ8W3VO" target="_blank" rel="noopener" class="btn btn--primary btn--full">Buy on Kindle</a>
+            <a href="https://www.amazon.com/dp/B0G22NP1ZD" target="_blank" rel="noopener" class="btn btn--outline btn--full">Buy Paperback</a>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================== REVIEWS / MEDIA ====================== -->
+  <section class="section section--tint" id="reviews">
+    <div class="container">
+      <p class="eyebrow">Praise &amp; Media</p>
+      <h2 class="section-title">What readers are saying</h2>
+      <p class="section-intro">Reviews from readers who've followed Jim across the road, the puzzle page, and the classroom.</p>
+
+      <div class="review-grid">
+        <div class="review-card">
+          <div class="quote-mark" aria-hidden="true">&ldquo;</div>
+          <p class="review-text">I started with the travel journal and ended up buying all three. It's rare to find an author this curious — and this easy to read.</p>
+          <p class="review-author">Marcia L.</p>
+          <p class="review-source">Verified Reader</p>
+        </div>
+        <div class="review-card">
+          <div class="quote-mark" aria-hidden="true">&ldquo;</div>
+          <p class="review-text">The puzzle book became a family tradition at our dinner table. Approachable for the kids, genuinely tricky for the adults.</p>
+          <p class="review-author">D. Okonkwo</p>
+          <p class="review-source">Parent &amp; Educator</p>
+        </div>
+        <div class="review-card">
+          <div class="quote-mark" aria-hidden="true">&ldquo;</div>
+          <p class="review-text">His classroom proverbs are now pinned above my desk. Short, wise, and exactly what a busy teacher needs.</p>
+          <p class="review-author">Ms. Hartley</p>
+          <p class="review-source">Middle School Teacher</p>
+        </div>
+      </div>
+
+      <div class="media-grid">
+        <figure class="yt-figure">
+          <div class="yt-facade" data-yt="jDw_iYdFu8w">
+            <img src="https://img.youtube.com/vi/jDw_iYdFu8w/hqdefault.jpg" alt="Jim Moehlenbrock — featured video" loading="lazy">
+            <button class="yt-play" type="button" aria-label="Play video">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+          </div>
+          <figcaption class="media-caption"><a href="https://youtu.be/jDw_iYdFu8w?si=6XdED2j37QbomiCC" target="_blank" rel="noopener" data-yt-title>Watch on YouTube</a></figcaption>
+        </figure>
+        <figure class="yt-figure">
+          <div class="yt-facade" data-yt="x8JjkyyqNTA">
+            <img src="https://img.youtube.com/vi/x8JjkyyqNTA/hqdefault.jpg" alt="Jim Moehlenbrock — featured video" loading="lazy">
+            <button class="yt-play" type="button" aria-label="Play video">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+          </div>
+          <figcaption class="media-caption"><a href="https://youtu.be/x8JjkyyqNTA?si=hL2J_cqmjVSonLnw" target="_blank" rel="noopener" data-yt-title>Watch on YouTube</a></figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================== CONTACT ====================== -->
+  <section class="section" id="contact">
+    <div class="container">
+      <div class="contact-grid">
+        <div class="contact-info">
+          <p class="eyebrow">Get in Touch</p>
+          <h2 class="section-title">Contact Jim</h2>
+          <p>For interviews, school visits, signed copies, or just to say a kind word about a book — send a note and Jim will get back to you.</p>
+
+          <div class="contact-detail">
+            <div class="label">Email</div>
+            <a href="mailto:hello@jimmoehlenbrock.com">hello@jimmoehlenbrock.com</a>
+          </div>
+          <div class="contact-detail">
+            <div class="label">Follow Along</div>
+            <div class="social-links">
+              <a href="#">Goodreads</a>
+              <a href="#">Instagram</a>
+              <a href="#">Amazon</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Static front-end handler below. To send for real, point this at
+             FormSubmit.co / Formspree, or Contact Form 7 in WordPress. -->
+        <div class="contact-form">
+          <form id="contactForm" novalidate>
+            <div class="form-row">
+              <div class="form-field">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" required>
+              </div>
+              <div class="form-field">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+              </div>
+            </div>
+            <div class="form-field">
+              <label for="subject">Subject</label>
+              <input type="text" id="subject" name="subject" required>
+            </div>
+            <div class="form-field">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" required></textarea>
+            </div>
+            <button type="submit" class="btn btn--primary">Send Message</button>
+            <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ====================== FOOTER ====================== -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-inner">
+      <a href="#home" class="brand">Jim <span>Moehlenbrock</span></a>
+      <ul class="footer-nav">
+        <li><a href="#author">Author</a></li>
+        <li><a href="#books">Books</a></li>
+        <li><a href="#reviews">Reviews</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <p class="footer-copy">&copy; <span id="year"></span> Jim Moehlenbrock. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ============================================================
+   JS — no animations; only state toggles & a static form handler.
+   ============================================================ */
+(function(){
+  'use strict';
+
+  /* Mobile nav toggle */
+  var toggle = document.getElementById('navToggle');
+  var links  = document.getElementById('navLinks');
+  toggle.addEventListener('click', function(){
+    var open = links.classList.toggle('is-open');
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  links.addEventListener('click', function(e){
+    if (e.target.tagName === 'A') {
+      links.classList.remove('is-open');
+      toggle.setAttribute('aria-expanded','false');
+    }
+  });
+
+  /* Scrollspy — highlights the current section in the nav (state only) */
+  var sections = ['home','author','books','reviews','contact']
+    .map(function(id){ return document.getElementById(id); })
+    .filter(Boolean);
+  var navAnchors = links.querySelectorAll('a');
+  function setActive(){
+    var pos = window.scrollY + 100;
+    var current = sections[0] ? sections[0].id : null;
+    sections.forEach(function(sec){ if (sec.offsetTop <= pos) current = sec.id; });
+    navAnchors.forEach(function(a){
+      a.classList.toggle('is-active', a.getAttribute('href') === '#' + current);
+    });
+  }
+  window.addEventListener('scroll', setActive, { passive:true });
+  window.addEventListener('load', setActive);
+
+  /* Static contact-form handler (front-end confirmation only) */
+  var form   = document.getElementById('contactForm');
+  var status = document.getElementById('formStatus');
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    if (!form.checkValidity()) {
+      status.textContent = 'Please fill in every field before sending.';
+      return;
+    }
+    var name = document.getElementById('name').value.trim();
+    status.textContent = 'Thanks, ' + name + '! Your message is ready to send. (Connect a form service to deliver it.)';
+    form.reset();
+  });
+
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  /* YouTube lazy-load facades — inject iframe only on click (no autoplay
+     until the user asks for it; keeps the page light). */
+  Array.prototype.forEach.call(document.querySelectorAll('.yt-facade'), function(facade){
+    facade.addEventListener('click', function(){
+      var id = facade.getAttribute('data-yt');
+      if (!id || facade.querySelector('iframe')) return;
+      var iframe = document.createElement('iframe');
+      // Pass the real origin on a hosted (http/https) domain so YouTube can
+      // verify the embedding host. Omitted on file:// or sandboxed previews
+      // (null origin), which is why playback only works once deployed.
+      var proto = window.location.protocol;
+      var originParam = (proto === 'http:' || proto === 'https:')
+        ? '&enablejsapi=1&origin=' + encodeURIComponent(window.location.origin) : '';
+      iframe.src = 'https://www.youtube.com/embed/' + id + '?autoplay=1&rel=0&playsinline=1' + originParam;
+      iframe.title = 'YouTube video player';
+      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+      iframe.setAttribute('allowfullscreen', '');
+      facade.innerHTML = '';
+      facade.appendChild(iframe);
+    });
+  });
+
+  /* Pull the real YouTube title for each video and use it as the caption.
+     Uses YouTube's public oEmbed endpoint (CORS-enabled). Falls back to
+     "Watch on YouTube" if the request is blocked or fails. */
+  Array.prototype.forEach.call(document.querySelectorAll('.yt-facade'), function(facade){
+    var id = facade.getAttribute('data-yt');
+    var fig = facade.closest('.yt-figure');
+    var link = fig && fig.querySelector('[data-yt-title]');
+    if (!id || !link) return;
+    var api = 'https://www.youtube.com/oembed?url=' +
+              encodeURIComponent('https://youtu.be/' + id) + '&format=json';
+    fetch(api)
+      .then(function(r){ return r.ok ? r.json() : Promise.reject(); })
+      .then(function(data){
+        if (data && data.title) {
+          link.textContent = data.title;
+          facade.querySelector('img').alt = data.title;
+        }
+      })
+      .catch(function(){ /* keep the fallback caption */ });
+  });
+})();
+</script>
+</body>
+</html>
